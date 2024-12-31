@@ -13,12 +13,26 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "index.md",
+                "file": "錬金工房/js-code.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "index"
+              "title": "js-code"
+            }
+          },
+          {
+            "id": "0e77df9c66d2db4f",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "2024-12-31.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2024-12-31"
             }
           },
           {
@@ -27,12 +41,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "4-📅-2024/2024-12-29.md",
+                "file": "2024-12-31.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2024-12-29"
+              "title": "2024-12-31"
             }
           }
         ],
@@ -88,8 +102,7 @@
               "title": "书签"
             }
           }
-        ],
-        "currentTab": 1
+        ]
       }
     ],
     "direction": "horizontal",
@@ -178,40 +191,40 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "ea62aedca8e9140d",
+  "active": "0e77df9c66d2db4f",
   "lastOpenFiles": [
-    "2024-12-31.md",
-    "未命名.md",
     "index.md",
-    "5-🧰-錬金工房/未命名.canvas",
+    "未命名.md",
+    "2024-12-31.md",
+    "錬金工房/js-html.md",
+    "錬金工房/js-code.md",
+    "錬金工房/js.md",
+    "3-🎞️-montage/cult.md",
+    "錬金工房/錬金工房.md",
+    "2-🧪-jekyll/12-quartz.md",
+    "4-📅-2024/2024-12-29.md",
+    "錬金工房/未命名.canvas",
     "4-📅-2024/2024-12-31.md",
     "category-folder/Some note.md",
     "category-folder/index.md",
-    "js-code.md",
-    "js-html.md",
-    "5-🧰-錬金工房/index.md",
-    "5-🧰-錬金工房/js.md",
-    "5-🧰-錬金工房/img.md",
-    "5-🧰-錬金工房/fancybox.md",
-    "5-🧰-錬金工房/backlinks.md",
-    "5-🧰-錬金工房/錬金工房.md",
-    "5-🧰-錬金工房",
-    "4-📅-2024/2024-12-29.md",
-    "2-🧪-jekyll/12-quartz.md",
+    "錬金工房/index.md",
+    "錬金工房/img.md",
+    "錬金工房/fancybox.md",
+    "錬金工房/backlinks.md",
+    "錬金工房",
     "2-🧪-jekyll/12-rtd-theme-rundocs.md",
     "2024-12-30.md",
     "12-vitality-25.md",
-    "3-🎞️-montage/cult.md",
     "3-🎞️-montage",
-    "5-🧰-錬金工房/2024-garage/创建链接.md",
-    "5-🧰-錬金工房/2024-garage/欢迎.md",
+    "錬金工房/2024-garage/创建链接.md",
+    "錬金工房/2024-garage/欢迎.md",
     "2024-12-29.md",
     "4-📅-2024/12-23.md",
     "2-🧪-jekyll/12-liquid-jekyll.md",
     "2-🧪-jekyll/12-Liquid-Variables.md",
     "4-📅-2024",
     "2024-garage-another/sub",
-    "5-🧰-錬金工房/2024-garage",
+    "錬金工房/2024-garage",
     "1-🪨-obsidian-note",
     "Pasted image 20241225110017.png",
     "2-🧪-jekyll",
