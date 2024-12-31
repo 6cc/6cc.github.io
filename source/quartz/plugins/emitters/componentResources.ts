@@ -165,9 +165,16 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
   
   componentResources.afterDOMLoaded.push(`
     const jScript = document.createElement("script")
-    jScript.src = "錬金工房/js.md"
+    jScript.src = "錬金工房/js"
     jScript.defer = true
     document.head.appendChild(jScript)
+  `)
+
+  componentResources.afterDOMLoaded.push(`
+    const jScript2 = document.createElement("script")
+    jScript2.src = "錬金工房/js.txt"
+    jScript2.defer = true
+    document.head.appendChild(jScript2)
   `)
   
   if (cfg.enableSPA) {
