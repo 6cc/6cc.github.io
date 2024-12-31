@@ -4,24 +4,39 @@
     "type": "split",
     "children": [
       {
-        "id": "7d713505492a0f3e",
+        "id": "86a2618d73e0f731",
         "type": "tabs",
         "children": [
           {
-            "id": "63b7a42396438504",
+            "id": "43a3be42f5bd81c3",
             "type": "leaf",
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2024-jekyll📄/12-quartz.md",
+                "file": "index.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "12-quartz"
+              "title": "index"
+            }
+          },
+          {
+            "id": "ea62aedca8e9140d",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "4-📅-2024/2024-12-29.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2024-12-29"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "vertical"
@@ -52,7 +67,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": "wyzxwk",
+                "query": "三代",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -73,7 +88,8 @@
               "title": "书签"
             }
           }
-        ]
+        ],
+        "currentTab": 1
       }
     ],
     "direction": "horizontal",
@@ -162,42 +178,43 @@
       "command-palette:打开命令面板": false
     }
   },
-  "active": "63b7a42396438504",
+  "active": "ea62aedca8e9140d",
   "lastOpenFiles": [
     "2024-12-31.md",
-    "2024-jekyll📄/12-rtd-theme-rundocs.md",
-    "2024-jekyll📄/12-quartz.md",
+    "未命名.md",
+    "index.md",
+    "5-🧰-錬金工房/未命名.canvas",
+    "4-📅-2024/2024-12-31.md",
+    "category-folder/Some note.md",
+    "category-folder/index.md",
+    "js-code.md",
+    "js-html.md",
+    "5-🧰-錬金工房/index.md",
+    "5-🧰-錬金工房/js.md",
+    "5-🧰-錬金工房/img.md",
+    "5-🧰-錬金工房/fancybox.md",
+    "5-🧰-錬金工房/backlinks.md",
+    "5-🧰-錬金工房/錬金工房.md",
+    "5-🧰-錬金工房",
+    "4-📅-2024/2024-12-29.md",
+    "2-🧪-jekyll/12-quartz.md",
+    "2-🧪-jekyll/12-rtd-theme-rundocs.md",
     "2024-12-30.md",
     "12-vitality-25.md",
-    "2023-cult/cult.md",
-    "2023-cult",
-    "2024-garage🧰/创建链接.md",
-    "2024-garage🧰/欢迎.md",
-    "2024-garage🧰/未命名.canvas",
+    "3-🎞️-montage/cult.md",
+    "3-🎞️-montage",
+    "5-🧰-錬金工房/2024-garage/创建链接.md",
+    "5-🧰-錬金工房/2024-garage/欢迎.md",
     "2024-12-29.md",
-    "2024📅/12-23.md",
-    "2024-jekyll📄/12-liquid-jekyll.md",
-    "2024-jekyll📄/12-Liquid-Variables.md",
-    "2024-jekyll📄/12-just-the-doc.md",
-    "2024📅/12-25.md",
-    "2024📅/12-24.md",
-    "2024📅/12-26.md",
-    "2024-12-27.md",
-    "2024-12-28.md",
-    "obsidian🪨/hopeful.md",
-    "12-subscribe-v2ray.md",
-    "2024-jekyll📄/12-just-the-doc-ja.md",
-    "obsidian🪨/实用脚本.md",
-    "obsidian🪨/DigitalGarden.md",
-    "12-vitality.md",
-    "2024📅/12-24-information.md",
-    "2024-jekyll📄/12-page-title.md",
-    "2024📅",
+    "4-📅-2024/12-23.md",
+    "2-🧪-jekyll/12-liquid-jekyll.md",
+    "2-🧪-jekyll/12-Liquid-Variables.md",
+    "4-📅-2024",
     "2024-garage-another/sub",
-    "2024-garage🧰",
-    "obsidian🪨",
+    "5-🧰-錬金工房/2024-garage",
+    "1-🪨-obsidian-note",
     "Pasted image 20241225110017.png",
-    "2024-jekyll📄",
+    "2-🧪-jekyll",
     "Clippings",
     "2024-garage-another"
   ]

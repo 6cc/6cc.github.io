@@ -162,7 +162,14 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
       document.head.appendChild(clarityScript)
     `)
   }
-
+  
+  componentResources.afterDOMLoaded.push(`
+    const jScript = document.createElement("script")
+    jScript.src = "錬金工房/js.md"
+    jScript.defer = true
+    document.head.appendChild(jScript)
+  `)
+  
   if (cfg.enableSPA) {
     componentResources.afterDOMLoaded.push(spaRouterScript)
   } else {
