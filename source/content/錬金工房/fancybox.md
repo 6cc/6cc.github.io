@@ -1,3 +1,6 @@
+<script>
+console.log("Hello world!");
+</script>
 ```html
 <script>
 console.log("Hello world!");

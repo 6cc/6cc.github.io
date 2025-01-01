@@ -6,3 +6,7 @@ alert("Hello world!");
 alert("Hello world!");
 </script>
 ```
+[[画个强壮的鲁迅.png]]
+<script>
+alert("Hello world!");
+</script>
