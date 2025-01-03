@@ -1,6 +1,6 @@
 index[[錬金アトリエ/index]]
 
-index[[category-folder/index]]
+index[[101111-錬金工房/category-folder/index]]
 
 ## nil
 Authoring Content[[Authoring Content]]
@@ -12,9 +12,9 @@ Some note[[Some note]]
 
 build[[build]]
 
-index[[index]]
+index[[index-md-root]]
 
-index.md[[index.md]]
+index.md[[index-md-root]]
 
 猫脖[[猫脖]]
 
@@ -32,4 +32,4 @@ https://github.com/jackyzha0/quartz/tree/v4/docs
 
 index.md
 
-[[index#🪴 Get Started|initialized]]
+[[index-md-root#🪴 Get Started|initialized]]
