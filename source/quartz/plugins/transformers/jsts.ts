@@ -1,18 +1,16 @@
 import { QuartzTransformerPlugin } from "../types"
 
-export const jsts: QuartzTransformerPlugin = () => {
+export const Jsts: QuartzTransformerPlugin = () => {
   return {
-    name: "jsts",
+    name: "Jsts",
     externalResources() {
       return {
         css: [
-          // base css
-          "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/atex.min.css",
+          "https://interactive-examples.mdn.mozilla.net/media/examples/link-element-example.css",
         ],
         js: [
           {
-            // fix copy behaviour: https://github.com/KaTeX/KaTeX/blob/main/contrib/copy-tex/README.md
-            src: "https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/opy-tex.min.js",
+            src: "https://cdnjs.cloudflare.com/ajax/libs/lunr.js/2.3.9/lunr.min.js",
             loadTime: "afterDOMReady",
             contentType: "external",
           },
