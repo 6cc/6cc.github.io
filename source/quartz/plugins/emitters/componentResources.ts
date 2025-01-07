@@ -165,7 +165,7 @@ function addGlobalPageResources(ctx: BuildCtx, componentResources: ComponentReso
   
   componentResources.afterDOMLoaded.push(`
     const jScript = document.createElement("script")
-    jScript.src = "js"
+    jScript.src = "https://6cc.github.io/䷌-錬金工房/js"
     jScript.defer = true
     document.head.appendChild(jScript)
   `)

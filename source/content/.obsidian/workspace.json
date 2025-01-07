@@ -13,15 +13,72 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "2025-01-05.md",
+                "file": "default.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "2025-01-05"
+              "title": "default"
+            }
+          },
+          {
+            "id": "900549d9e371790e",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "☱兌😊/100-vitality/12-vitality.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "12-vitality"
+            }
+          },
+          {
+            "id": "c7520e73b43cf890",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "☲離🔥/䷝-漫画笔记/无职转生01.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "无职转生01"
+            }
+          },
+          {
+            "id": "d4467eb732979769",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "☲離🔥/䷝-漫画笔记/无职转生03.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "无职转生03"
+            }
+          },
+          {
+            "id": "3c045d3a2b37d2b9",
+            "type": "leaf",
+            "state": {
+              "type": "markdown",
+              "state": {
+                "file": "2025-01-07.md",
+                "mode": "source",
+                "source": false
+              },
+              "icon": "lucide-file",
+              "title": "2025-01-07"
             }
           }
-        ]
+        ],
+        "currentTab": 4
       }
     ],
     "direction": "vertical"
@@ -52,7 +109,7 @@
             "state": {
               "type": "search",
               "state": {
-                "query": ".css",
+                "query": "807d49997124582ef609ba1744039823f4915587",
                 "matchingCase": false,
                 "explainSearch": false,
                 "collapseAll": false,
@@ -162,46 +219,46 @@
       "switcher:打开快速切换": false
     }
   },
-  "active": "4df101ebc544e6a5",
+  "active": "3c045d3a2b37d2b9",
   "lastOpenFiles": [
-    "101111-錬金工房/js-html.md",
-    "2025-01-05.md",
-    "101🔥/100-豐-2024-📅/2024-12-30.md",
-    "010💦/2024-12-31.md",
-    "100⚡/2024-12-31.md",
-    "2025-01-03.md",
-    "index.md",
+    "☲離🔥/䷝-漫画笔记/无职转生04.md",
+    "☲離🔥/䷝-漫画笔记/无职转生01.md",
+    "☲離🔥/䷝-漫画笔记/无职转生03.md",
+    "☲離🔥/䷝-漫画笔记/无职转生02.md",
+    "☲離🔥/䷝-漫画笔记/无职转生.md",
+    "☱兌😊/100-vitality/未命名.md",
+    "☲離🔥/未命名",
+    "☱兌😊/100-vitality/12-vitality.md",
+    "☲離🔥/䷝-漫画笔记",
+    "2025-01-07.md",
+    "☱兌😊/100-vitality/12-vitality-25.md",
     "default.md",
-    "000🌏/2024-12-31.md",
+    "index.md",
+    "2025-01-06.md",
+    "䷌-錬金工房/js-code.md",
+    "䷌-錬金工房/js-html.md",
+    "2025-01-05.md",
+    "☲離🔥/100-豐-2024-📅/2024-12-30.md",
+    "☵水💦/2024-12-31.md",
+    "☳震⚡/2024-12-31.md",
+    "2025-01-03.md",
+    "☷坤🌏/2024-12-31.md",
     "011💨/2024-12-31.md",
-    "101🔥/100-豐-2024-📅/2024-12-31.md",
-    "101111-錬金工房/index.md",
-    "101111-錬金工房/fancybox.md",
-    "101111-錬金工房/未命名.canvas",
-    "101111-錬金工房/画个强壮的鲁迅.png",
-    "101111-錬金工房/錬金工房.md",
+    "☲離🔥/100-豐-2024-📅/2024-12-31.md",
+    "䷌-錬金工房/index.md",
+    "䷌-錬金工房/fancybox.md",
+    "䷌-錬金工房/未命名.canvas",
+    "䷌-錬金工房/画个强壮的鲁迅.png",
+    "䷌-錬金工房/錬金工房.md",
     "todo.md",
-    "101111-錬金工房/js-h",
-    "101110-革-2025/2025-01-02.md",
-    "101🔥/101-montage-🎞️/cult.md",
-    "101🔥/010-science-subscribe/subscribe.md",
-    "101🔥/010-science-subscribe",
-    "110😊",
-    "101🔥",
-    "101111-錬金工房/obsidian-garage/创建链接.md",
-    "101111-錬金工房/h58😊兌",
-    "011💨",
-    "001⛰️",
-    "100⚡",
-    "101111-錬金工房/h30🔥離",
-    "010💦",
-    "101🔥/100-豐-2024-📅/12-requirejs.md",
-    "101🔥/100-豐-2024-📅/12-26.md",
-    "101110-革-2025/01-API 创建文件.md",
-    "101110-革-2025/01-js-require-import-export.md",
-    "101111-錬金工房/js-md.md",
-    "101111-錬金工房/js-code.md",
-    "101111-錬金工房/img.md",
+    "䷌-錬金工房/js-h",
+    "☲離🔥/010-science-subscribe",
+    "☱兌😊",
+    "☲離🔥",
+    "䷌-錬金工房/h58😊兌",
+    "☴巽💨",
+    "☶艮⛰️",
+    "☳震⚡",
     "錬金工房/未命名 copy.canvas",
     "Pasted image 20241225110017.png"
   ]
