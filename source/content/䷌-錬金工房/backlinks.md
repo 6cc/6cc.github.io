@@ -14,9 +14,9 @@ Some note[[Some note]]
 
 build[[build]]
 
-index[[index]]
+index[[index-original]]
 
-index.md[[index]]
+index.md[[index-original]]
 
 猫脖[[猫脖]]
 
@@ -34,4 +34,4 @@ https://github.com/jackyzha0/quartz/tree/v4/docs
 
 index.md
 
-[[index#🪴 Get Started|initialized]]
+[[index-original#🪴 Get Started|initialized]]
