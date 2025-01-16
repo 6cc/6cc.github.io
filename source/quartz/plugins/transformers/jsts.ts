@@ -1,6 +1,15 @@
 import { QuartzTransformerPlugin } from "../types"
 
-export const Jsts: QuartzTransformerPlugin = () => {
+interface Options {
+  renderEngine: "" | ""
+  customMacros: MacroType
+}
+
+interface MacroType {
+  [key: string]: string
+}
+
+export const Jsts: QuartzTransformerPlugin<Partial<Options>> = () => {
   return {
     name: "Jsts",
     externalResources() {

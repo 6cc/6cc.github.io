@@ -2,7 +2,7 @@
 [[無職轉生]]
 index[[錬金アトリエ/index]]
 
-index[[䷌-錬金工房/category-folder/index]]
+index[[l錬金工房-䷌/category-folder/index]]
 
 ## nil
 Authoring Content[[Authoring Content]]
