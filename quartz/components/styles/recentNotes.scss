@@ -1,0 +1,45 @@
+.recent-notes {
+  & > h3 {
+    margin: 0.5rem 0 0 0;
+    font-size: 1rem;
+  }
+
+  & > ul.recent-ul {
+    list-style: none;
+    margin-top: 1rem;
+    padding-left: 0;
+
+    & > li {
+      margin: 1rem 0;
+      .section > .desc > h3 > a { // this would need to change to h4 bc I changed the heading sizes
+        background-color: transparent;
+      }
+
+      .section > .meta {
+        margin: 0 0 0.5rem 0;
+        opacity: 0.6;
+      }
+    }
+  }
+
+  // Added a border around the recentnotes component 07-10-24
+  border: 2px dotted rgba(191,201,176, 0.50); /* 2px width, dotted style, color same as highlight */
+  border-radius: 10px; /* Rounded corners, adjust value as needed */
+  padding: 20px; /* Optional padding to demonstrate the effect */
+
+}
+.see-more{
+  font-size: 0.85rem;
+  color: var(--gray);
+  white-space: pre;
+  display: inline-block;
+}
+
+.external-icon {
+  height: 1ex;
+  margin: 0 0.15em;
+
+  > path {
+    fill: var(--dark);
+  }
+}

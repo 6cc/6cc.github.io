@@ -1,0 +1,8 @@
+{
+  "promptDelete": false,
+  "alwaysUpdateLinks": true,
+  "attachmentFolderPath": "./attachments",
+  "showLineNumber": true,
+  "newFileLocation": "folder",
+  "newFileFolderPath": "tbd"
+}
