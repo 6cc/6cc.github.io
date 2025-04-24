@@ -1,0 +1,163 @@
+<script>
+
+const createMenuModule = () => {
+    createTrigger();
+    createNavBar();
+    createNavButton();
+    createDropUp();
+    createDropUp();
+    createNavButton();
+};
+
+const createTrigger = () => {
+    const triggerField = document.createElement('div');
+    triggerField.id = 'triggerField';
+    triggerField.style.position = 'fixed';
+    triggerField.style.bottom = '0px';
+    triggerField.style.right = '0px';
+    triggerField.style.width = '40px';
+    triggerField.style.height = '40px';
+    triggerField.style.backgroundColor = '#333';
+    // Function to show navBar
+    triggerField.addEventListener('mouseover', () => {
+    navBar.style.display = 'block';
+    });
+    document.body.appendChild(triggerField);
+};
+
+const createNavBar = () => {
+    const triggerField = document.querySelector('div#triggerField');
+    // Create navBar
+    const navBar = document.createElement('div');
+    navBar.id = 'navBar';
+    navBar.style.position = 'fixed';
+    navBar.style.bottom = '40px';
+    navBar.style.width = '818px';
+    navBar.style.height = '40px';
+    navBar.style.backgroundColor = '#555';
+    navBar.style.display = 'none';
+    document.body.insertBefore(navBar, triggerField);
+
+    // Function to hide navBar
+    navBar.addEventListener('mouseleave', () => {
+    navBar.style.display = 'none';
+    });
+
+    // Create and style the navbar container
+};
+
+const createNavButton = () => {
+    const navBar = document.querySelector('div#navBar');
+    // Create and add links
+    const homeLink = createNavLink('#home', 'Home');
+    navBar.appendChild(homeLink);
+};
+
+const createDropUp = () => {
+    // Create and style the dropdown container
+    const dropdown = document.createElement('div');
+    dropdown.style.float = 'left';
+    dropdown.style.position = 'relative';
+    const navBar = document.querySelector('div#navBar');
+    navBar.appendChild(dropdown);
+
+    // Create and style the dropdown button
+    const dropbtn = document.createElement('button');
+    dropbtn.innerHTML = 'Dropdown <i class="fa fa-caret-down"></i>';
+    dropbtn.style.fontSize = '16px';
+    dropbtn.style.border = 'none';
+    dropbtn.style.outline = 'none';
+    dropbtn.style.color = 'white';
+    dropbtn.style.padding = '14px 16px';
+    dropbtn.style.backgroundColor = 'inherit';
+    dropbtn.style.fontFamily = 'inherit';
+    dropbtn.style.margin = '0';
+    dropbtn.addEventListener('mouseover', () => {
+        dropbtn.style.backgroundColor = 'red';
+    });
+    dropbtn.addEventListener('mouseout', () => {
+        dropbtn.style.backgroundColor = '#333';
+    });
+    dropdown.appendChild(dropbtn);
+
+    // Create and style the dropdown content container
+    const dropdownContent = document.createElement('div');
+    dropdownContent.style.display = 'none';
+    dropdownContent.style.position = 'absolute';
+    dropdownContent.style.backgroundColor = '#f9f9f9';
+    dropdownContent.style.minWidth = '100px';
+    dropdownContent.style.boxShadow = '0px 8px 16px 0px rgba(0,0,0,0.2)';
+    dropdownContent.style.zIndex = '1';
+    dropdownContent.style.bottom = '40px'; // Position the dropup content
+    dropdown.appendChild(dropdownContent);
+
+    // Create and add dropdown links
+    const link1 = createDropdownLink('#', 'Link 1');
+    dropdownContent.appendChild(link1);
+
+    const link2 = createDropdownLink('#', 'Link 2');
+    dropdownContent.appendChild(link2);
+
+    const link3 = createDropdownLink('#', 'Link 3');
+    dropdownContent.appendChild(link3);
+
+    // Show the dropdown menu on hover
+    dropdown.addEventListener('mouseover', () => {
+        dropdownContent.style.display = 'block';
+    });
+
+    // Hide the dropdown menu when not hovering
+    dropdown.addEventListener('mouseout', () => {
+        dropdownContent.style.display = 'none';
+    });
+};
+
+// Function to create and style links
+const createNavLink = (href, text) => {
+    const link = document.createElement('a');
+    link.href = href;
+    link.textContent = text;
+    link.style.float = 'left';
+    link.style.fontSize = '16px';
+    link.style.color = 'white';
+    link.style.textAlign = 'center';
+    link.style.padding = '14px 16px';
+    link.style.textDecoration = 'none';
+    link.addEventListener('mouseover', () => {
+        link.style.backgroundColor = 'red';
+    });
+    link.addEventListener('mouseout', () => {
+        link.style.backgroundColor = '#333';
+    });
+    return link;
+};
+
+// Function to create and style dropdown links
+const createDropdownLink = (href, text) => {
+    const link = document.createElement('a');
+    link.href = href;
+    link.textContent = text;
+    link.style.float = 'none';
+    link.style.color = 'black';
+    link.style.padding = '12px 16px';
+    link.style.textDecoration = 'none';
+    link.style.display = 'block';
+    link.style.textAlign = 'left';
+    link.addEventListener('mouseover', () => {
+        link.style.backgroundColor = '#ddd';
+    });
+    link.addEventListener('mouseout', () => {
+        link.style.backgroundColor = '#f9f9f9';
+    });
+    return link;
+};
+
+if (document.body) {
+    createMenuModule();
+} else {
+    document.addEventListener("DOMContentLoaded", () => {
+        createMenuModule();
+    });
+}
+
+</script>

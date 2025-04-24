@@ -1,0 +1,12 @@
+```liquid
+{% include list.liquid all=true %}
+
+{% raw %}{% include list.liquid all=true %}{% endraw %}
+```
+
+```liquid
+## {{title}}
+{{url}}
+{{date}}
+{{content|replace:("国":"g","中":"z")}}
+```

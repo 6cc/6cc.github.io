@@ -1,0 +1,13 @@
+{
+	"nodes":[
+		{"id":"3b440e0c54cffdd0","x":-680,"y":-620,"width":400,"height":400,"type":"file","file":"革䷰2025/2025-01/2025-01-太宰治.md"},
+		{"id":"f5e05c34bdc6c4b9","x":-260,"y":-620,"width":400,"height":400,"type":"file","file":"🧪錬金工房-䷌/画个强壮的鲁迅.png"},
+		{"id":"f38d061c971f968d","x":-660,"y":-200,"width":250,"height":60,"type":"text","text":""},
+		{"id":"2016436ef29998e8","type":"file","file":"☲🔥離/001-jekyll-🧪/12-just-the-doc.md","x":-400,"y":-200,"width":400,"height":400},
+		{"id":"136e761ee55124b0","type":"text","text":"","x":15,"y":-200,"width":50,"height":50}
+	],
+	"edges":[
+		{"id":"9742ab0ff14e8da9","fromNode":"f38d061c971f968d","fromSide":"top","toNode":"3b440e0c54cffdd0","toSide":"bottom"},
+		{"id":"2f9503ecb62dc163","fromNode":"136e761ee55124b0","fromSide":"right","toNode":"f5e05c34bdc6c4b9","toSide":"right"}
+	]
+}
