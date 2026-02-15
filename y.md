@@ -1,3 +1,3 @@
 ### debug
 
-<script src="./hYakusho.js"></script>
+<script src="./9/hYakusho-025.md"></script>
