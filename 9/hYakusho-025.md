@@ -771,7 +771,7 @@ const EventManager = {
         const mdMirrors = [
             `https://gcore.jsdelivr.net/gh/qqvvv/qqvvv.github.io/content/9/myriaDown/allInOne.markdown`,
             `https://testingcf.jsdelivr.net/gh/qqvvv/qqvvv.github.io/content/9/myriaDown/allInOne.markdown`,
-            `https://qqvvv.github.io/9/myriaDown/allInOne.markdown`,
+            `https://cdn.jsdmirror.com/gh/qqvvv/qqvvv.github.io/content/9/myriaDown/allInOne.markdown`,
         ];
 
         try {
