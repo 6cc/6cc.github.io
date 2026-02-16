@@ -2,6 +2,8 @@
 ```js
 */
 
+// 0.252
+
 const hYakusho = (function() {
     "use strict";
 
@@ -497,8 +499,8 @@ const EventManager = {
             .u-card { background: #1e1e1e; border: 1px solid #333; text-align: center; cursor: pointer; overflow: hidden; }
             .u-thumb { width: 100%; aspect-ratio: 3/4; background-size: cover; background-position: center; background-color: #222; }
             .u-label { font-size: 11px; padding: 6px; color: #bbb; }
-            .u-btn { padding: 14px 18px; border-bottom: 1px solid #333; cursor: pointer; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
-            .u-header { padding: 15px; background: #1a1a1a; font-weight: bold; border-bottom: 1px solid #333; color: #ea580c; }
+            .u-btn { padding: 14px 18px; border-bottom: 0px solid #333; cursor: pointer; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
+            .u-header { padding: 15px; background: #1a1a1a; font-weight: bold; border-bottom: 0px solid #333; color: #ea580c; }
         `;
         const style = document.createElement('style');
         style.innerHTML = css;
@@ -536,9 +538,9 @@ const EventManager = {
         const meta = this.getMeta(node);
         
         // 1. 头部与返回按钮
-        let html = `<div class="u-header">${node.title}</div>`;
+        let html = `<table style="background:#1a1a1a; position: sticky; top: 0px; width:100%;"><td><div class="u-btn" style="color:#2196F3" data-action="back">❮ 返回上级</div></td><td><div class="u-header">${node.title}</div></td></table>`;
         if (!isRoot) {
-            html += `<div class="u-btn" style="color:#2196F3" data-action="back">❮ 返回上级</div>`;
+            html += ``;
         } else {
             html += `<div class="u-btn" style="color:#ff9800" onclick="window.MirrorRacer.showStatsPanel()">⚙ 系统概览</div>`;
         }
