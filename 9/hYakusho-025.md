@@ -2,7 +2,7 @@
 ```js
 */
 
-// 0.252
+// 0.25
 
 const hYakusho = (function() {
     "use strict";
@@ -490,7 +490,8 @@ const EventManager = {
     
     injectStyles() {
         const css = `
-            #h-orb { position: fixed; right: 20px; bottom: 20px; width: 48px; height: 48px; border-radius: 50%; background: rgba(80, 80, 80, 0.6); color: white; z-index: 1049; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; backdrop-filter: blur(4px); }
+            #h-o-back { position: fixed; right: 12px; bottom: 12px; width: 48px; height: 48px; border-radius: 50%; background: rgba(80, 80, 80, 0.6); color: white; z-index: 1049; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; backdrop-filter: blur(4px); }
+            #h-orb { position: fixed; right: -12px; bottom: -12px; width: 36px; height: 36px; border-radius: 50%; background: rgba(80, 80, 80, 0.6); color: white; z-index: 1049; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; backdrop-filter: blur(4px); }
             .md-sidebar { position: fixed; top: 0; right: 0; bottom: 0; width: 320px; background: #121212; z-index: 19; transform: translateX(100%); transition: transform 0.3s ease; overflow-y: auto; color: #eee; border-left: 1px solid #333; font-family: sans-serif; }
             .md-sidebar.active { transform: translateX(0); }
             .md-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 18; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
@@ -499,8 +500,8 @@ const EventManager = {
             .u-card { background: #1e1e1e; border: 1px solid #333; text-align: center; cursor: pointer; overflow: hidden; }
             .u-thumb { width: 100%; aspect-ratio: 3/4; background-size: cover; background-position: center; background-color: #222; }
             .u-label { font-size: 11px; padding: 6px; color: #bbb; }
-            .u-btn { padding: 14px 18px; border-bottom: 0px solid #333; cursor: pointer; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
-            .u-header { padding: 15px; background: #1a1a1a; font-weight: bold; border-bottom: 0px solid #333; color: #ea580c; }
+            .u-btn { padding: 14px 18px; cursor: pointer; font-size: 14px; display: flex; justify-content: space-between; align-items: center; }
+            .u-header { padding: 15px; background: #1a1a1a; font-weight: bold; color: #ea580c; }
         `;
         const style = document.createElement('style');
         style.innerHTML = css;
@@ -746,8 +747,9 @@ const EventManager = {
         this.injectStyles();
         const bd = document.createElement('div'); bd.className = 'md-backdrop'; bd.onclick = () => this.toggleDrawer(false);
         const sb = document.createElement('div'); sb.className = 'md-sidebar';
+        const o_back = document.createElement('div'); o_back.id = 'h-o-back'; o_back.innerHTML = '⬅️'; o_back.onclick = () => this.navigateUp();
         const orb = document.createElement('div'); orb.id = 'h-orb'; orb.innerHTML = '⚙'; orb.onclick = () => this.toggleDrawer();
-        document.body.append(bd, sb, orb);
+        document.body.append(bd, sb, orb, o_back);
         // 注意：这里需要确保 EventManager.init() 在此处之后执行
         EventManager.init(); // 绑定事件0.35
 
