@@ -2,7 +2,7 @@
 ```js
 */
 
-// 0.253
+// 0.254
 
 const hYakusho = (function() {
     "use strict";
@@ -488,8 +488,8 @@ const EventManager = {
     
     injectStyles() {
         const css = `
-            #h-o-back { position: fixed; right: 36px; bottom: 36px; width: 48px; height: 48px; border-radius: 50%; background: rgba(80, 80, 80, 0.6); color: white; z-index: 1049; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; backdrop-filter: blur(4px); }
-            #h-orb { position: fixed; right: -12px; bottom: -12px; width: 48px; height: 48px; border-radius: 50%; background: rgba(80, 80, 80, 0.6); color: white; z-index: 1049; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; backdrop-filter: blur(4px); }
+            #h-o-back { position: fixed; right: 48px; bottom: 48px; width: 48px; height: 48px; border-radius: 50%; background: rgba(80, 80, 80, 0.6); color: white; z-index: 1049; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; backdrop-filter: blur(4px); }
+            #h-orb { position: fixed; right: -24px; bottom: -24px; width: 48px; height: 48px; border-radius: 50%; background: rgba(80, 80, 80, 0.6); color: white; z-index: 1049; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; backdrop-filter: blur(4px); }
             .md-sidebar { position: fixed; top: 0; right: 0; bottom: 0; width: 320px; background: #121212; z-index: 19; transform: translateX(100%); transition: transform 0.3s ease; overflow-y: auto; color: #eee; border-left: 1px solid #333; font-family: sans-serif; }
             .md-sidebar.active { transform: translateX(0); }
             .md-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 18; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
@@ -574,7 +574,7 @@ const EventManager = {
             html += `
                 <div class="u-card" data-action="nav" data-index="${index}">
                     <div class="u-thumb" style="background-image: url('${coverUrl}')"></div>
-                    <div class="u-label">${child.title}</div>
+                    <div class="u-label">第 ${child.title} 卷</div>
                 </div>`;
         });
         html += `</div>`;
@@ -606,7 +606,7 @@ const EventManager = {
                         class="lazy-img"
                         style="width:100%; min-height:100px; display:block; background:#222;" 
                         loading="lazy">
-                    <div class="u-label">P.${i+1}</div>
+                    <div class="u-label">${i+1} 页</div>
                 </div>`;
         });
         html += `</div>`;
