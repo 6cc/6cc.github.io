@@ -2,7 +2,7 @@
 sort: 11
 ---
 
-# Test Documentation
+### 未来ガジェット研究所
 
 ```
 {% raw %}{% include list.liquid all=true %}{% endraw %}

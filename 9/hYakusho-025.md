@@ -2,7 +2,7 @@
 ```js
 */
 
-// 0.25
+// 0.253
 
 const hYakusho = (function() {
     "use strict";
@@ -259,8 +259,6 @@ const URLFactory = {
             return;
         }
 
-        console.log("[hLog] 开始图库镜像全量测速...");
-        
         // 直接使用模板地址进行测速，不再生成具体的图片 URL
         // 这样既能测试连通性，又能获取最纯粹的延迟
         const winner = await RaceEngine.run(state.rules.templates, 'Gallery');
@@ -362,7 +360,7 @@ const URLFactory = {
             if (document.querySelector(`link[href="${url}"]`)) return resolve();
             const link = document.createElement('link');
             link.rel = 'stylesheet'; link.href = url;
-            link.onload = () => { console.log(`[hLog] 🎨 CSS Loaded: ${url.split('/').pop()}`); resolve(); };
+            link.onload = () => { resolve(); };
             link.onerror = reject;
             document.head.appendChild(link);
         });
@@ -381,7 +379,7 @@ const URLFactory = {
                 await new Promise(r => requestAnimationFrame(r));
             }
             if (window[globalName]) {
-                console.log(`[hLog] 📜 JS Executed: ${globalName}`);
+                
             } else {
                 console.warn(`[hLog] ⚠️ ${globalName} imported but window object missing.`);
             }
@@ -490,8 +488,8 @@ const EventManager = {
     
     injectStyles() {
         const css = `
-            #h-o-back { position: fixed; right: 12px; bottom: 12px; width: 48px; height: 48px; border-radius: 50%; background: rgba(80, 80, 80, 0.6); color: white; z-index: 1049; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; backdrop-filter: blur(4px); }
-            #h-orb { position: fixed; right: -12px; bottom: -12px; width: 36px; height: 36px; border-radius: 50%; background: rgba(80, 80, 80, 0.6); color: white; z-index: 1049; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; backdrop-filter: blur(4px); }
+            #h-o-back { position: fixed; right: 36px; bottom: 36px; width: 48px; height: 48px; border-radius: 50%; background: rgba(80, 80, 80, 0.6); color: white; z-index: 1049; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; backdrop-filter: blur(4px); }
+            #h-orb { position: fixed; right: -12px; bottom: -12px; width: 48px; height: 48px; border-radius: 50%; background: rgba(80, 80, 80, 0.6); color: white; z-index: 1049; cursor: pointer; display: flex; align-items: center; justify-content: center; font-size: 20px; backdrop-filter: blur(4px); }
             .md-sidebar { position: fixed; top: 0; right: 0; bottom: 0; width: 320px; background: #121212; z-index: 19; transform: translateX(100%); transition: transform 0.3s ease; overflow-y: auto; color: #eee; border-left: 1px solid #333; font-family: sans-serif; }
             .md-sidebar.active { transform: translateX(0); }
             .md-backdrop { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 18; opacity: 0; pointer-events: none; transition: opacity 0.3s; }
@@ -759,7 +757,6 @@ const EventManager = {
             // 3. 执行分流跳转
             // 情况 A: 显式指定跳转到第一本书 (L2)
             if (rootNode.tags.redirectToBook == 1) {
-                console.log("[hLog] 触发指令：直接进入第一本漫画");
                 this.navigateTo([0, 0]); 
             } 
             // 情况 B: 默认行为，进入书库 (L1)
@@ -823,7 +820,7 @@ const EventManager = {
 
             // 最终展现：确保 jsPanel 真的存在
             if (window.jsPanel) {
-                console.log("[hLog] 所有竞速完成，弹出全量仪表盘。");
+                
             } else {
                 // 如果 jsPanel 没出来，至少在控制台给你看结果
                 console.table(state.allStats);
