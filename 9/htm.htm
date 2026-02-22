@@ -1,0 +1,232 @@
+<style>
+        :root {
+            --menu-width: 300px;
+            --menu-height: 400px;
+            --primary-color: #3498db;
+            --bg-color: #f4f7f6;
+            --transition-speed: 0.3s;
+        }
+
+        body {
+            font-family: 'PingFang SC', 'Microsoft YaHei', sans-serif;
+            background-color: var(--bg-color);
+            margin: 0;
+            overflow: hidden;
+        }
+
+        /* --- 隐藏控制器 --- */
+        #menu-toggle, .sub-controller { display: none; }
+
+        /* --- 右下角触发按钮 --- */
+        .menu-btn {
+            position: fixed;
+            right: 30px;
+            bottom: 30px;
+            width: 60px;
+            height: 60px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            z-index: 1000;
+            font-size: 24px;
+            transition: transform 0.3s;
+        }
+        #menu-toggle:checked ~ .menu-btn { transform: rotate(45deg); background: #e74c3c; }
+
+        /* --- 菜单容器 --- */
+        .menu-wrapper {
+            position: fixed;
+            right: 30px;
+            bottom: 100px;
+            width: var(--menu-width);
+            height: var(--menu-height);
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            overflow: hidden; /* 关键：隐藏溢出的层级 */
+            opacity: 0;
+            transform: translateY(20px) scale(0.9);
+            pointer-events: none;
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        #menu-toggle:checked ~ .menu-wrapper {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            pointer-events: auto;
+        }
+
+        /* --- 滑动轨道 (所有的级联都在这里横向排布) --- */
+        .menu-track {
+            display: flex;
+            width: 400%; /* 支持4层深度 */
+            height: 100%;
+            transition: transform var(--transition-speed) ease;
+        }
+
+        /* --- 每一层级列表 --- */
+        .menu-level {
+            width: var(--menu-width);
+            height: 100%;
+            flex-shrink: 0;
+            overflow-y: auto;
+        }
+
+        .menu-level h3 {
+            padding: 15px 20px;
+            margin: 0;
+            background: #fafafa;
+            border-bottom: 1px solid #eee;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+
+        /* 返回按钮样式 */
+        .back-btn {
+            cursor: pointer;
+            margin-right: 10px;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .menu-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 15px 20px;
+            border-bottom: 1px solid #f0f0f0;
+            cursor: pointer;
+            color: #333;
+            text-decoration: none;
+            transition: background 0.2s;
+        }
+        .menu-item:hover { background: #f9f9f9; }
+        .menu-item::after { content: '›'; color: #ccc; font-size: 18px; }
+        .menu-item.no-child::after { content: ''; }
+
+        /* --- 核心逻辑：根据选择器位移轨道 --- */
+        
+        /* 进到第二层: Other Projects */
+        #go-other:checked ~ .menu-wrapper .menu-track { transform: translateX(-25%); }
+        
+        /* 进到第三层: Project Example */
+        #go-example:checked ~ .menu-wrapper .menu-track { transform: translateX(-50%); }
+
+        /* 进到第三层: 二层 */
+        #go-level2:checked ~ .menu-wrapper .menu-track { transform: translateX(-50%); }
+
+    </style>
+<div id="myMenu"></div>
+<script>
+/**
+ * 纯 JS 算法：将缩进文本转换为纯 CSS 层级菜单 HTML
+ * @param {string} text - 输入的层级文本
+ * @param {string} containerId - 目标容器 ID
+ */
+function generateSlidingMenu(text, containerId) {
+    const lines = text.split('\n').filter(line => line.trim() !== '');
+    const container = document.getElementById(containerId);
+    
+    // 1. 数据解析：转化为带层级的对象数组
+    const menuData = lines.map((line, index) => {
+        const content = line.trim().replace(/^[-*]\s*/, ''); // 去掉开头的横杠
+        const indent = line.search(/\S/); // 计算首个非空白字符前的空格数
+        return { id: `menu-item-${index}`, content, indent, children: [] };
+    });
+
+    // 2. 构建树形结构
+    const root = { children: [] };
+    const stack = [root];
+
+    menuData.forEach(node => {
+        while (stack.length > 1 && node.indent <= stack[stack.length - 1].indent) {
+            stack.pop();
+        }
+        stack[stack.length - 1].children.push(node);
+        stack.push(node);
+    });
+
+    // 3. 递归生成 HTML (适配你之前的 CSS 逻辑)
+    // 需要生成两部分：顶层的 Radio 控制器 和 内部的轨道(Track)
+    let controllersHtml = '<input type="radio" name="nav" id="go-root" class="sub-controller" checked>';
+    let trackHtml = '<div class="menu-track">';
+
+    // 递归函数：生成每一层级(Level)的面板
+    function buildPanels(nodes, parentName, parentId) {
+        let currentLevelHtml = `<div class="menu-level">`;
+        currentLevelHtml += `<h3>${parentId !== 'root' ? `<label for="${parentName}" class="back-btn">‹</label>` : ''}${parentId}</h3>`;
+        
+        nodes.forEach(node => {
+            if (node.children.length > 0) {
+                // 有子项：生成控制器和跳转 Label
+                const radioId = `go-${node.id}`;
+                controllersHtml += `<input type="radio" name="nav" id="${radioId}" class="sub-controller">`;
+                currentLevelHtml += `<label for="${radioId}" class="menu-item">${node.content}</label>`;
+            } else {
+                // 无子项：普通链接
+                currentLevelHtml += `<a href="#" class="menu-item no-child">${node.content}</a>`;
+            }
+        });
+        
+        currentLevelHtml += `</div>`;
+        trackHtml += currentLevelHtml;
+
+        // 继续递归子层级
+        nodes.forEach(node => {
+            if (node.children.length > 0) {
+                buildPanels(node.children, `go-${parentId === 'Main Menu' ? 'root' : parentId.replace(/\s+/g, '-')}`, node.content);
+            }
+        });
+    }
+
+    buildPanels(root.children, 'root', 'Main Menu');
+    trackHtml += '</div>';
+
+    // 4. 注入 DOM
+    // 注意：CSS 需要配合这些动态生成的 ID。
+    // 为了让 CSS 生效，我们需要动态添加一点位移样式
+    const dynamicStyle = `
+        ${menuData.map((node, index) => {
+            const radioId = `go-${node.id}`;
+            // 简单逻辑：根据当前是第几个 level 来计算移动百分比
+            // 实际应用中可能需要更复杂的深度计算，这里简化处理
+            return `#${radioId}:checked ~ .menu-wrapper .menu-track { transform: translateX(-${(index + 1) * 25}%); }`;
+        }).join('\n')}
+    `;
+    
+    const styleTag = document.createElement('style');
+    styleTag.innerHTML = dynamicStyle;
+    document.head.appendChild(styleTag);
+
+    container.innerHTML = controllersHtml + `
+        <input type="checkbox" id="menu-toggle">
+        <label for="menu-toggle" class="menu-btn">＋</label>
+        <div class="menu-wrapper">${trackHtml}</div>
+    `;
+}
+
+// --- 使用示例 ---
+const rawData = `
+- All Projects
+- Other projects
+  - Project Example
+    - Idan Vector
+    - Testings
+    - Features_120
+    - Aggregators
+  - 二层
+    - dan
+    - estings
+    - eatures
+    - 三层
+- Settings
+`;
+
+// 调用函数（假设你页面里有个 <div id="myMenu"></div>）
+// generateSlidingMenu(rawData, 'myMenu');
+</script>
