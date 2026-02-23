@@ -25,6 +25,15 @@ const func2 = (x, y) => {
 };
 // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Arrow_functions
 
+const newDiv = document.createElement("div");
+// https://developer.mozilla.org/zh-CN/docs/Web/API/Document/createElement
+
+newDiv.id = "testqq";
+// https://developer.mozilla.org/zh-CN/docs/Web/API/Document/getElementById
+
+document.body.appendChild(newDiv);
+// https://developer.mozilla.org/zh-CN/docs/Web/API/Node/appendChild
+
 if (document.readyState === "loading") {
   // 此时加载尚未完成
   document.addEventListener("DOMContentLoaded", func2);
