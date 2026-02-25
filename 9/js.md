@@ -25,6 +25,16 @@ const func2 = (x, y) => {
 };
 // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Functions/Arrow_functions
 
+(() => {
+  // 语句……
+})();
+
+// 异步 IIFE
+(async () => {
+  // 语句……
+})();
+// https://developer.mozilla.org/zh-CN/docs/Glossary/IIFE
+
 const newDiv = document.createElement("div");
 // https://developer.mozilla.org/zh-CN/docs/Web/API/Document/createElement
 

@@ -1,205 +1,156 @@
 /**
- * 极限实验版：严格注入目标 CSS 风格，并以纯 CSS 状态机驱动
+ * 实验项目：createElement 递归逻辑全修正版
+ * 修复：多分支路径下的父级回溯失效问题
  */
-const MenuActions = {
-    "功能a": () => alert("执行了：功能a"),
-    "功能b": () => console.log("执行了：功能b"),
-    "功能c": () => console.log("执行了：功能c"),
-    "功能d": () => console.log("执行了：功能d"),
-    "功能e": () => console.log("执行了：功能e"),
-    "功能f": () => console.log("执行了：功能f"),
-    "default": (name) => console.log(`未绑定 Action: ${name}`)
+
+const MenuConfig = {
+    actions: {
+        "功能A": () => alert("执行功能 A"),
+        "default": (name) => console.log("执行功能:", name)
+    }
 };
 
-function createExperimentalMenu(text, containerId) {
+function createDomMenu(text, containerId) {
+    const container = document.getElementById(containerId);
+    if (!container) return;
+
+    // --- 1. 数据解析 (Tree Structure) ---
     const lines = text.split('\n').filter(l => l.trim());
-    const tree = { id: 'root', name: 'Menu', children: [], indent: -1 };
+    // 统一 Root ID 命名
+    const ROOT_ID = 'menu-panel-root';
+    const tree = { id: ROOT_ID, name: 'Root', children: [], indent: -1, parentId: null };
     const stack = [tree];
 
-    // --- 1. 数据解析 ---
     lines.forEach((line, index) => {
         const indent = line.search(/\S/);
         const name = line.trim().replace(/^[-*]\s*/, '');
-        const node = { id: `m${index}`, name, indent, children: [], parentId: 'root' };
-
+        
+        // 动态生成 ID，并确保它能通过 stack 找到真实的父节点 ID
         while (stack.length > 1 && indent <= stack[stack.length - 1].indent) {
             stack.pop();
         }
-        const parent = stack[stack.length - 1];
-        node.parentId = parent.id;
-        parent.children.push(node);
+        
+        const parentNode = stack[stack.length - 1];
+        const node = { 
+            id: `menu-panel-${index}`, 
+            name, 
+            indent, 
+            children: [], 
+            parentId: parentNode.id // 关键：此处确保了 parentId 永远指向 stack 中的父级
+        };
+        
+        parentNode.children.push(node);
         stack.push(node);
     });
 
-    // --- 2. HTML 骨架构造 (严格对齐你的 CSS 类名) ---
-    let controllers = '<input type="checkbox" id="toggle-menu" class="nav-state"><input type="radio" name="nav" id="go-root" class="nav-state" checked>';
-    let panels = '';
-    let dynamicCss = '';
+    // --- 2. 界面外层 ---
+    const flexDiv = document.createElement('div');
+    flexDiv.className = 'flexDiv';
 
-    function build(node) {
+    const btn = document.createElement('div');
+    btn.className = 'trigger-btn sec_btn';
+    btn.textContent = '☰';
+    
+    const wrapper = document.createElement('div');
+    wrapper.className = 'selectWrapper';
+
+    btn.onclick = (e) => {
+        e.stopPropagation();
+        wrapper.classList.toggle('isOpen');
+    };
+
+    // --- 3. 递归生成面板 ---
+    function renderNode(node, isRoot = false) {
         if (node.children.length === 0) return;
 
-        if (node.id !== 'root') {
-            controllers += `<input type="radio" name="nav" id="go-${node.id}" class="nav-state">`;
-            
-            // 核心结合点：将 Radio 状态与你的 clip-path/transform 动效咬合
-            dynamicCss += `
-                #go-${node.id}:checked ~ .flexDiv .selectWrapper #pane-${node.parentId} { 
-                    transform: translateX(-100%); 
-                    clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%); 
-                    pointer-events: none;
-                }
-                #go-${node.id}:checked ~ .flexDiv .selectWrapper #pane-${node.id} { 
-                    transform: translateX(0); 
-                    clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); 
-                    pointer-events: auto;
-                }
-            `;
-        }
+        const panel = document.createElement('div');
+        panel.className = 'multiSelect' + (isRoot ? ' active' : '');
+        panel.id = node.id;
 
-        // 使用你的 .multiSelect 作为面板
-        panels += `<div class="multiSelect" id="pane-${node.id}">`;
-        
-        // 头部：如果是子菜单，添加返回上一级的触发器
-        if (node.id !== 'root') {
-            panels += `
-                <label for="go-${node.parentId}" style="display:block;">
-                    <div class="iconDiv bottomBorder titleDiv noSpace" style="pointer-events: auto; cursor: pointer; color: var(--textSecondary);">
-                        <i class="fa fa-angle-left"></i> <span>${node.name}</span>
-                    </div>
-                </label>
-            `;
-        } else {
-            panels += `<div class="iconDiv bottomBorder titleDiv"><span>${node.name}</span></div>`;
-        }
+        const header = document.createElement('div');
+        header.className = 'bottomBorder titleDiv';
+        header.textContent = node.name === 'Root' ? 'New feature vector' : node.name;
+        panel.appendChild(header);
 
-        // 渲染子项，使用你的 div 布局
         node.children.forEach(child => {
+            const item = document.createElement('div');
             const hasChild = child.children.length > 0;
-            const actionAttr = hasChild ? '' : `data-action="${child.name}"`;
-            const labelWrapper = hasChild ? `<label for="go-${child.id}" style="display:block; width:100%;">` : '';
-            const labelEnd = hasChild ? `</label>` : '';
-            const baseClass = hasChild ? "iconDiv justHover" : "iconDiv action-trigger";
-
-            panels += `
-                ${labelWrapper}
-                <div class="${baseClass} bottomBorder" ${actionAttr}>
-                    <span>${child.name}</span>
-                    ${hasChild ? '<i class="fa fa-angle-right"></i>' : ''}
-                </div>
-                ${labelEnd}
-            `;
+            
+            if (hasChild) {
+                item.className = 'iconDiv justHover bottomBorder';
+                item.innerHTML = `<span>${child.name}</span><span class="nav-icon">»</span>`;
+                item.onclick = (e) => {
+                    e.stopPropagation();
+                    const target = document.getElementById(child.id);
+                    if (target) {
+                        panel.classList.replace('active', 'leftOut');
+                        target.classList.add('active');
+                    }
+                };
+            } else {
+                item.className = 'iconDiv bottomBorder';
+                item.textContent = child.name;
+                item.onclick = (e) => {
+                    e.stopPropagation();
+                    (MenuConfig.actions[child.name] || MenuConfig.actions.default)(child.name);
+                    wrapper.classList.remove('isOpen');
+                };
+            }
+            panel.appendChild(item);
         });
-        
-        panels += `</div>`; // end .multiSelect
-        node.children.forEach(build);
+
+        // 返回逻辑
+        if (!isRoot) {
+            const back = document.createElement('div');
+            back.className = 'topBorder iconDiv noSpace';
+            back.innerHTML = `<span class="nav-icon">«</span><span>⬅️Back</span>`;
+            back.onclick = (e) => {
+                e.stopPropagation();
+                const parentPanel = document.getElementById(node.parentId);
+                if (parentPanel) {
+                    panel.classList.remove('active');
+                    parentPanel.classList.remove('leftOut');
+                    parentPanel.classList.add('active');
+                }
+            };
+            panel.appendChild(back);
+        }
+
+        wrapper.appendChild(panel);
+        node.children.forEach(child => renderNode(child, false));
     }
 
-    build(tree);
+    renderNode(tree, true);
+    flexDiv.appendChild(btn);
+    flexDiv.appendChild(wrapper);
+    container.appendChild(flexDiv);
 
-    // --- 3. 样式注入与 DOM 拼装 ---
-    const container = document.getElementById(containerId);
-    
-    // 我们将你的 button 样式单独提取给 label 触发器，实现无需 js 的 checkbox 控制
-    const triggerBtnStyle = `
-        .nav-state { display: none; }
-        
-        .trigger-btn {
-            font-family: "Roboto", sans-serif; font-size: calc(var(--sizeVar) * 1.75); font-weight: 500;
-            border: none; outline: none; padding: var(--sizeVar) calc(var(--sizeVar) * 2);
-            border-radius: calc(var(--sizeVar) / 2); cursor: pointer;
-            background-color: var(--bgColor); color: var(--txtColor);
-            box-shadow: 0 0 0 1px var(--borColor) inset; display: inline-block;
-        }
-        .trigger-btn:hover { --bgColor: #6279e7; }
-        .trigger-btn:active { --bgColor: #5468c7; }
-        
-        /* Checkbox 控制下拉容器的显示 */
-        #toggle-menu:checked ~ .flexDiv .selectWrapper {
-            opacity: 1; pointer-events: auto;
-        }
-
-        /* 修复初始状态的重叠问题 */
-        .multiSelect { pointer-events: none; }
-        #pane-root { pointer-events: auto; }
-        
-        /* 引入外部图标库 (确保箭头可见) */
-        @import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css');
-        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-    `;
-
-    container.innerHTML = `
-        <style>
-            ${textToCSS()} /* 注入你提供的 CSS 原文 */
-            ${triggerBtnStyle}
-            ${dynamicCss}
-        </style>
-        
-        ${controllers}
-        
-        <div class="flexDiv">
-            <label for="toggle-menu" class="trigger-btn sec_btn">
-                <i class="fa fa-bars"></i> Open Menu
-            </label>
-            
-            <div class="selectWrapper" style="width: 250px;">
-                ${panels}
-            </div>
-        </div>
-    `;
-
-    // --- 4. 挂载 Action 映射处理器 ---
-    container.addEventListener('click', (e) => {
-        const trigger = e.target.closest('.action-trigger');
-        if (trigger) {
-            const actionName = trigger.getAttribute('data-action');
-            if (MenuActions[actionName]) {
-                MenuActions[actionName]();
-            } else {
-                MenuActions.default(actionName);
-            }
-        }
-    });
+    injectStyles();
 }
 
-// 辅助函数：存放你提供的 CSS 字符串
-function textToCSS() {
-    return `
-        :root {
-          --bgColor: #0fddaf; --txtColor: #ffffff; --borColor: rgba(0, 0, 0, 0);
-          --sizeVar: 8px; --textPrimary: #4b4760; --textSecondary: #7f7989;
-          --borderColor: #cccccc;
-        }
-        body { font-family: "Roboto", sans-serif; font-weight: 400; font-size: calc(var(--sizeVar) * 1.75); }
-        .flexDiv { display: flex; flex-direction: column; align-items: flex-start; width: fit-content; margin: 32px; }
-        .selectWrapper {
-          width: 100%; position: relative; opacity: 0; pointer-events: none;
-          transition: opacity 100ms linear 0s; filter: drop-shadow(0 6px 26px rgba(0, 0, 0, 0.24));
-          padding-top: calc(var(--sizeVar) / 2);
-        }
-        .multiSelect {
-          clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);
-          border: 1px solid var(--borderColor); box-sizing: border-box;
-          border-radius: calc(var(--sizeVar) / 2); position: absolute;
-          width: auto; left: 0; right: 0; overflow: hidden; background: #ffffff;
-          transition: transform 300ms ease-in-out 0s, clip-path 300ms ease-in-out 0s;
-        }
-        .multiSelect div { color: var(--textPrimary); padding: 16px; width: auto; cursor: pointer; }
-        .multiSelect div:hover { background-color: #f6f6f6; }
-        .bottomBorder { border-bottom: 1px solid var(--borderColor); }
-        .topBorder { border-top: 1px solid var(--borderColor); }
-        .iconDiv { display: flex; align-items: center; justify-content: space-between; }
-        .noSpace { justify-content: flex-start; gap: 6px; }
-        .titleDiv { pointer-events: none; font-weight: 700; }
-        .justHover i { opacity: 0; }
-        .justHover:hover i { opacity: 1; }
-        .multiSelect .placeholder { color: var(--textSecondary); font-style: italic; }
-        .multiSelect .narrow { padding-top: 10px; padding-bottom: 10px; }
-        .multiSelect i { color: var(--textSecondary); }
-        .multiSelect { transform: translateX(100%); clip-path: polygon(0 0, 0 0, 0 100%, 0% 100%); }
-        .multiSelect:nth-of-type(1) { transform: translateX(0); clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%); }
-        .sec_btn { --bgColor: #869cff; }
+function injectStyles() {
+    if (document.getElementById('pixel-style')) return;
+    const style = document.createElement('style');
+    style.id = 'pixel-style';
+    style.textContent = `
+        :root { --bgColor: #869cff; --sizeVar: 8px; --borderColor: #cccccc; --textPrimary: #4b4760; --textSecondary: #7f7989; }
+        .flexDiv { position: fixed; right: 30px; bottom: 30px; display: flex; flex-direction: column-reverse; align-items: flex-end; font-family: 'Segoe UI', system-ui, sans-serif; }
+        .trigger-btn { width: 50px; height: 50px; background: var(--bgColor); color: #fff; display: flex; align-items: center; justify-content: center; border-radius: 4px; cursor: pointer; font-size: 24px; transition: 0.2s; box-shadow: 0 4px 12px rgba(0,0,0,0.1); user-select: none; }
+        .trigger-btn:hover { background: #6279e7; }
+        .selectWrapper { width: 260px; height: 400px; position: relative; margin-bottom: 20px; opacity: 0; pointer-events: none; transition: 300ms cubic-bezier(0.4, 0, 0.2, 1); filter: drop-shadow(0 6px 26px rgba(0, 0, 0, 0.24)); }
+        .selectWrapper.isOpen { opacity: 1; pointer-events: auto; }
+        .multiSelect { position: absolute; bottom: 0; left: 0; width: 100%; height: 100%; background: #fff; border: 1px solid var(--borderColor); border-radius: 4px; transform: translateX(100%); clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); transition: transform 350ms ease-in-out, clip-path 350ms ease-in-out; display: flex; flex-direction: column; overflow: hidden; }
+        .multiSelect.active { transform: translateX(0); clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); z-index: 10; }
+        .multiSelect.leftOut { transform: translateX(-100%); clip-path: polygon(0 0, 0 0, 0 100%, 0 100%); }
+        .iconDiv { display: flex; align-items: center; justify-content: space-between; padding: 16px; cursor: pointer; color: var(--textPrimary); font-size: 14px; }
+        .iconDiv:hover { background-color: #f6f6f6; }
+        .bottomBorder { border-bottom: 1px solid var(--borderColor); padding: 16px; }
+        .topBorder { border-top: 1px solid var(--borderColor); margin-top: auto; }
+        .titleDiv { font-weight: 700; color: var(--textPrimary); }
+        .noSpace { justify-content: flex-start; gap: 8px; color: var(--textSecondary); }
+        .nav-icon { font-weight: bold; font-size: 16px; line-height: 1; }
     `;
+    document.head.appendChild(style);
 }
 
 (() => {
@@ -208,18 +159,12 @@ function textToCSS() {
   document.body.appendChild(newDiv);
 })();
 
-// 启动代码
-const myText = `
-- Root
-  - 菜单层级1
-    - 菜单层级2
-      - 菜单层级3
-        - 功能f
-      - 功能e
-    - 菜单层级2
-      - 功能d
-    - 功能c
-    - 功能b
-  - 功能a
-`;
-createExperimentalMenu(myText, 'menu-container');
+// 验证用文本
+createDomMenu(`
+- 菜单1
+  - 子菜单1.1
+    - 功能A
+- 菜单2
+  - 子菜单2.1
+    - 功能B
+`, 'menu-container');
