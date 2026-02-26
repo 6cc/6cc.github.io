@@ -1,7 +1,30 @@
+/*
+```js
+*/
+
+// ==UserScript==
+// @name        New script 
+// @namespace   Violentmonkey Scripts
+// @match       *://*/*
+// @grant       none
+// @version     1.0
+// @author      -
+// @description 2026/2/26 00:00:00
+// ==/UserScript==
+
+(() => {
+    'use strict';
+
 /**
  * 终极复刻版：实现紧贴的 1px 边界滑动
  * 策略：取消内部面板 clip-path，改用整体容器 overflow + 物理位移
  */
+
+const visualizeContainer = () => {
+  const newDiv = document.createElement("div");
+  newDiv.id = "menu-container";
+  document.body.appendChild(newDiv);
+};
 
 function createUltimateMenu(text, containerId) {
     const container = document.getElementById(containerId);
@@ -139,13 +162,9 @@ function createUltimateMenu(text, containerId) {
     }
 }
 
-(() => {
-  const newDiv = document.createElement("div");
-  newDiv.id = "menu-container";
-  document.body.appendChild(newDiv);
-})();
-
-createUltimateMenu(`
+const visualizeMenu = () => {
+  visualizeContainer ();
+  createUltimateMenu(`
 - 核心引擎
   - 渲染器
     - 像素级复刻
@@ -153,3 +172,30 @@ createUltimateMenu(`
   - 物理系统
 - 资源管理
 `, 'menu-container');
+};
+
+const readyDOM_Adapter = () => {
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", visualizeMenu);
+  } else {
+    visualizeMenu ();
+  }
+};
+
+const initial_Unique = () => {
+  if ( window.meLoaded ) {
+    console.warn("Instance already running. Aborting.");
+    return;
+  }
+  readyDOM_Adapter ();
+  window.meLoaded = true;
+};
+
+initial_Unique ();
+
+    // Your code here...
+})();
+
+/*
+```
+*/
