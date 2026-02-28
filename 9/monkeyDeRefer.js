@@ -98,8 +98,8 @@ async function _loadCSS(url, forceTag) {
 const loadRefer = () => {
   loadResources({
       'vectorS': 'https://6cc.github.io/9/vectorS.css', // 自动尝试 import 并挂载到 window.jsPanel
-      'dayjs': 'https://gcore.jsdelivr.net/gh/Flyer53/jsPanel4/es6module/jspanel.min.css',
-      'jsPanel': 'https://gcore.jsdelivr.net/gh/Flyer53/jsPanel4/es6module/jspanel.min.js'       // 自动识别为 CSS 并使用 <link> 加载
+      'dayjs': 'https://gcore.jsdelivr.net/gh/6cc/6cc.github.io/9/vectorSelection.js',
+      // 自动识别为 CSS 并使用 <link> 加载
   }, {
       callback: () => {
           console.log('所有可用资源加载完毕！');
