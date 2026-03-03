@@ -1,7 +1,3 @@
-/*
-```js
-*/
-
 /**
  * 工业级资源加载器
  * @param {string|string[]|Object} inputs - 网址、网址数组，或 { 变量名: 网址 } 对象
@@ -87,7 +83,3 @@ async function _loadCSS(url, forceTag) {
     });
 }
 // 同时加载多个库，并指定它们的全局变量名
-
-/*
-```
-*/

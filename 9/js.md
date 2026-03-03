@@ -60,6 +60,11 @@ if (document.readyState === "loading") {
   }
 // https://developer.mozilla.org/zh-CN/docs/Web/API/Document/readyState
 
+export function myFunction() {
+  // …
+}
+// https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/export
+
 /*
 ```
 */
