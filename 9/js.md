@@ -19,6 +19,12 @@ console.assert(0)
   }
   // https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/if...else
 
+console.log(1 === 1);
+// https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Strict_equality
+
+console.log(1 == 1);
+// https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Operators/Equality
+
 const func2 = (x, y) => {
   console.debug(document.readyState);
   return x + y;
@@ -43,6 +49,9 @@ newDiv.id = "testqq";
 
 document.body.appendChild(newDiv);
 // https://developer.mozilla.org/zh-CN/docs/Web/API/Node/appendChild
+
+var x = 1;
+// https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Statements/var
 
 if (document.readyState === "loading") {
   // 此时加载尚未完成
