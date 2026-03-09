@@ -9,20 +9,20 @@
  */
 // inspired by alvarotrigo https://codepen.io/alvarotrigo/pen/mdXPawB
 
-const visualizeContainer = () => {
+const implantContainer = () => {
   const newDiv = document.createElement("div");
   newDiv.id = "menu-container";
   document.body.appendChild(newDiv);
 };
 
-const MenuActions = {
+const menuActions = {
     "像素级复刻": () => alert("执行功能 A"),
     "丝滑动效": () => console.log("执行功能 B"),
     "功能f": () => { document.body.style.background = "#2b3e50"; },
     "default": (name) => console.log(`点击了: ${name}，但未定义具体函数。`)
 };
 
-export function createUltimateMenu ( text, containerId ) {
+export function renderMenu ( text, containerId ) {
     const container = document.getElementById(containerId);
     const ROOT_ID = 'menu-panel-root';
     const lines = text.split('\n').filter(l => l.trim());
@@ -121,8 +121,6 @@ export function createUltimateMenu ( text, containerId ) {
     container.appendChild(flexDiv);
     // 注入调整后的样式
 }
-
-visualizeContainer ();
 
 /*
 ```

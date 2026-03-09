@@ -10,13 +10,21 @@
     // 这里不需要嵌套 async，直接使用刚才加载的函数
     await referLibrary({
         0: 'https://gcore.jsdelivr.net/gh/6cc/6cc.github.io/9/menuAT.css',
-        '': 'https://gcore.jsdelivr.net/gh/6cc/6cc.github.io/9/menu-AT.js',
+        'renderMenu': 'https://gcore.jsdelivr.net/gh/6cc/6cc.github.io/9/menu-AT.js',
         1: 'https://gcore.jsdelivr.net/gh/Flyer53/jsPanel4/es6module/jspanel.min.css',
         'jsPanel': 'https://gcore.jsdelivr.net/gh/Flyer53/jsPanel4/es6module/jspanel.min.js',
     });
 
-    if (window.createUltimateMenu) {
-        createUltimateMenu(`
+    if (window.renderMenu) {
+        implantContainer ();
+        const menuActions = {
+            "像素级复刻": () => alert("执行功能 A"),
+            "丝滑动效": () => console.log("执行功能 B"),
+            "功能f": () => { document.body.style.background = "#2b3e50"; },
+            "default": (name) => console.log(`点击了: ${name}，但未定义具体函数。`)
+        };
+
+        renderMenu(`
 - 核心引擎
   - 渲染器
     - 像素级复刻
