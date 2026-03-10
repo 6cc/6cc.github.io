@@ -10,13 +10,10 @@
 // inspired by alvarotrigo https://codepen.io/alvarotrigo/pen/mdXPawB
 
 export const implantContainer = () => {
-  const newDiv = document.createElement("div");
-  newDiv.id = "menu-container";
-  document.body.appendChild(newDiv);
+  console.info(document.readyState);
 };
 
 export function renderMenu ( text, containerId ) {
-    const container = document.getElementById(containerId);
     const ROOT_ID = 'menu-panel-root';
     const lines = text.split('\n').filter(l => l.trim());
     const tree = { id: ROOT_ID, name: 'Root', children: [], indent: -1, parentId: null };
@@ -111,7 +108,9 @@ export function renderMenu ( text, containerId ) {
     renderNode(tree, true);
     flexDiv.appendChild(btn);
     flexDiv.appendChild(wrapper);
+    const container = document.createElement("div");
     container.appendChild(flexDiv);
+    document.body.appendChild(container);
     // 注入调整后的样式
 }
 

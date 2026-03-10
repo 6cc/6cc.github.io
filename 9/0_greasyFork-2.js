@@ -1,30 +1,33 @@
 (async () => {
-    // 1. 导入加载器模块
-    // 注意：加载器脚本本身必须包含 export function loadResources...
-    const module = await import('https://gcore.jsdelivr.net/gh/qqvvv/qqvvv.github.io/content/6/0_referLibrary.js');
-    
-    // 3. 执行资源加载
-    // 这里不需要嵌套 async，直接使用刚才加载的函数
-    // 1. 加载资源并拿到返回的模块对象
-    const lib = await module.referLibrary({
-        0: 'https://gcore.jsdelivr.net/gh/6cc/6cc.github.io/9/menuAT.css',
-        'menuAT': 'https://qqvvv.github.io/6/2_menu-AT.js',
-        1: 'https://gcore.jsdelivr.net/gh/Flyer53/jsPanel4/es6module/jspanel.min.css',
-        'jsPanel': 'https://gcore.jsdelivr.net/gh/Flyer53/jsPanel4/es6module/jspanel.min.js',
+    // 1. 导入加载器
+    const { referLibrary } = await import('https://gcore.jsdelivr.net/gh/6cc/6cc.github.io/9/1_referLibrary.js');
+
+    // 2. 资源加载：使用具有语义的 Key
+    await referLibrary({
+        'menuStyle': 'https://gcore.jsdelivr.net/gh/6cc/6cc.github.io/9/menuAT.css',     // ID将是 style-menuStyle
+        'menuAT':    'https://gcore.jsdelivr.net/gh/6cc/6cc.github.io/9/2_menu-AT-IC.js',
+        'panelStyle':'https://gcore.jsdelivr.net/gh/Flyer53/jsPanel4/es6module/jspanel.min.css',
+        'jsPanel':   'https://gcore.jsdelivr.net/gh/Flyer53/jsPanel4/es6module/jspanel.min.js',
     });
 
-    // 2. 从返回的对象中解构函数 (不管你在 2_menu-AT.js 里 export 了多少个)
-    const { implantContainer, renderMenu } = lib.menuAT;
-    const { jsPanel } = lib.jsPanel;
-
-    // 3. 执行逻辑
-    if (lib.menuAT) {
-        const container = implantContainer(); 
-        renderMenu(`- 菜单数据...`, container);
-    }
-    if (lib.jsPanel) {
-        jsPanel.create({ headerTitle: 'Success' });
-    }
+    // 3. 直接调用！ 
+    // 因为新版 referLibrary 已经帮你把这些模块挂载到了 window.menuAT 和 window.jsPanel
     
-    console.log("底座已完美解析 ESM 模块内容");
+    // 生成容器 (假设 implantContainer 已经在 menuAT 中 export)
+    menuAT.implantContainer(); 
+    
+    // 渲染菜单
+    menuAT.renderMenu(`
+- 核心引擎
+  - 渲染器
+- 资源管理
+    `, 'menu-container');
+
+    // 创建 jsPanel
+    // 注意：如果是官方 ESM 版，jsPanel 可能是对象里的一个属性
+    const panel = (jsPanel.jsPanel || jsPanel).create({
+        headerTitle: '系统底座',
+        content: '资源加载成功！'
+    });
+
 })();
