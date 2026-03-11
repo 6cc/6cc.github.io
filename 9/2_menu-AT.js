@@ -1,25 +1,14 @@
 
-/*
-```js
-*/
-
 /**
  * 终极复刻版：实现紧贴的 1px 边界滑动
  * 策略：取消内部面板 clip-path，改用整体容器 overflow + 物理位移
  */
 // inspired by alvarotrigo https://codepen.io/alvarotrigo/pen/mdXPawB
 
-const implantContainer = () => {
+export const implantContainer = () => {
   const newDiv = document.createElement("div");
   newDiv.id = "menu-container";
   document.body.appendChild(newDiv);
-};
-
-const menuActions = {
-    "像素级复刻": () => alert("执行功能 A"),
-    "丝滑动效": () => console.log("执行功能 B"),
-    "功能f": () => { document.body.style.background = "#2b3e50"; },
-    "default": (name) => console.log(`点击了: ${name}，但未定义具体函数。`)
 };
 
 export function renderMenu ( text, containerId ) {
@@ -86,8 +75,8 @@ export function renderMenu ( text, containerId ) {
                 item.onclick = (e) => {
                     e.stopPropagation();
                     // 统一调用底座 Actions 模块
-                    if (typeof MenuActions !== 'undefined' && MenuActions[child.name]) {
-                        MenuActions[child.name]();
+                    if (typeof menuActions !== 'undefined' && menuActions[child.name]) {
+                        menuActions[child.name]();
                     } else {
                         console.log("执行默认功能:", child.name);
                     }
@@ -121,7 +110,3 @@ export function renderMenu ( text, containerId ) {
     container.appendChild(flexDiv);
     // 注入调整后的样式
 }
-
-/*
-```
-*/

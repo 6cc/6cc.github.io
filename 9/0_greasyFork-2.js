@@ -1,3 +1,10 @@
+const menuActions = {
+    "功能a": () => alert("执行功能 A"),
+    "功能b": () => console.log("执行功能 B"),
+    "功能f": () => { document.body.style.background = "#2b3e50"; },
+    "default": (name) => console.log(`点击了: ${name}，但未定义具体函数。`)
+};
+
 (async () => {
     // 1. 导入加载器
     const { referLibrary } = await import('https://gcore.jsdelivr.net/gh/6cc/6cc.github.io/9/1_referLibrary.js');
@@ -5,7 +12,7 @@
     // 2. 资源加载：使用具有语义的 Key
     await referLibrary({
         'menuStyle': 'https://gcore.jsdelivr.net/gh/6cc/6cc.github.io/9/menuAT.css',     // ID将是 style-menuStyle
-        'menuAT':    'https://gcore.jsdelivr.net/gh/6cc/6cc.github.io/9/2_menu-AT-IC.js',
+        'menuAT':    'https://gcore.jsdelivr.net/gh/6cc/6cc.github.io/9/2_menu-AT.js',
         'panelStyle':'https://gcore.jsdelivr.net/gh/Flyer53/jsPanel4/es6module/jspanel.min.css',
         'jsPanel':   'https://gcore.jsdelivr.net/gh/Flyer53/jsPanel4/es6module/jspanel.min.js',
     });
@@ -20,7 +27,11 @@
     menuAT.renderMenu(`
 - 核心引擎
   - 渲染器
+    - 像素级复刻
+    - 丝滑动效
+  - 物理系统
 - 资源管理
+- 功能f
     `, 'menu-container');
 
     // 创建 jsPanel
