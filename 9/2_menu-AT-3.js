@@ -11,7 +11,7 @@ export const implantContainer = () => {
   document.body.appendChild(newDiv);
 };
 
-export function renderMenu ( text, containerId ) {
+export function renderMenu ( text, containerId, customActions ) {
     const container = document.getElementById(containerId);
     const ROOT_ID = 'menu-panel-root';
     const lines = text.split('\n').filter(l => l.trim());

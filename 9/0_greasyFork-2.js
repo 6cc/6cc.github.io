@@ -1,8 +1,15 @@
 const menuActions = {
-    "功能a": () => alert("执行功能 A"),
-    "功能b": () => console.log("执行功能 B"),
-    "功能f": () => { document.body.style.background = "#2b3e50"; },
-    "default": (name) => console.log(`点击了: ${name}，但未定义具体函数。`)
+  "像素级复刻": () => {
+    // 创建 jsPanel
+    // 注意：如果是官方 ESM 版，jsPanel 可能是对象里的一个属性
+    const panel = (jsPanel.jsPanel || jsPanel).create({
+      headerTitle: '系统底座',
+      content: '资源加载成功！'
+    });
+  },
+  "丝滑动效": () => console.log("执行功能 B"),
+  "功能f": () => { document.body.style.background = "#2b3e50"; },
+  "default": (name) => console.log(`点击了: ${name}，但未定义具体函数。`),
 };
 
 (async () => {
@@ -12,7 +19,7 @@ const menuActions = {
     // 2. 资源加载：使用具有语义的 Key
     await referLibrary({
         'menuCss': 'https://gcore.jsdelivr.net/gh/6cc/6cc.github.io/9/menuAT.css',     // ID将是 style-menuStyle
-        'menuAT':    'https://gcore.jsdelivr.net/gh/6cc/6cc.github.io/9/2_menu-AT-cA.js',
+        'menuAT':    'https://gcore.jsdelivr.net/gh/6cc/6cc.github.io/9/2_menu-AT-3.js',
         'panelCss':'https://gcore.jsdelivr.net/gh/Flyer53/jsPanel4/es6module/jspanel.min.css',
         'jsPanel':   'https://gcore.jsdelivr.net/gh/Flyer53/jsPanel4/es6module/jspanel.min.js',
     });
@@ -32,13 +39,5 @@ const menuActions = {
   - 物理系统
 - 资源管理
 - 功能f
-    `, 'menu-container');
-
-    // 创建 jsPanel
-    // 注意：如果是官方 ESM 版，jsPanel 可能是对象里的一个属性
-    const panel = (jsPanel.jsPanel || jsPanel).create({
-        headerTitle: '系统底座',
-        content: '资源加载成功！'
-    });
-
+    `, 'menu-container', menuActions);
 })();
