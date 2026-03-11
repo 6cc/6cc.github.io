@@ -1,8 +1,4 @@
 
-/*
-```js
-*/
-
 /**
  * 终极复刻版：实现紧贴的 1px 边界滑动
  * 策略：取消内部面板 clip-path，改用整体容器 overflow + 物理位移
@@ -10,10 +6,13 @@
 // inspired by alvarotrigo https://codepen.io/alvarotrigo/pen/mdXPawB
 
 export const implantContainer = () => {
-  console.info(document.readyState);
+  const newDiv = document.createElement("div");
+  newDiv.id = "menu-container";
+  document.body.appendChild(newDiv);
 };
 
 export function renderMenu ( text, containerId ) {
+    const container = document.getElementById(containerId);
     const ROOT_ID = 'menu-panel-root';
     const lines = text.split('\n').filter(l => l.trim());
     const tree = { id: ROOT_ID, name: 'Root', children: [], indent: -1, parentId: null };
@@ -76,8 +75,10 @@ export function renderMenu ( text, containerId ) {
                 item.onclick = (e) => {
                     e.stopPropagation();
                     // 统一调用底座 Actions 模块
-                    if (typeof MenuActions !== 'undefined' && MenuActions[child.name]) {
-                        MenuActions[child.name]();
+                    // 优先使用传入的 customActions
+                    const actions = customActions || window.menuActions || {};
+                    if (actions[child.name]) {
+                        actions[child.name]();
                     } else {
                         console.log("执行默认功能:", child.name);
                     }
@@ -108,12 +109,6 @@ export function renderMenu ( text, containerId ) {
     renderNode(tree, true);
     flexDiv.appendChild(btn);
     flexDiv.appendChild(wrapper);
-    const container = document.createElement("div");
     container.appendChild(flexDiv);
-    document.body.appendChild(container);
     // 注入调整后的样式
 }
-
-/*
-```
-*/
