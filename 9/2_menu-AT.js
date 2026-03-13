@@ -11,7 +11,7 @@ export const implantContainer = () => {
   document.body.appendChild(newDiv);
 };
 
-export function renderMenu ( text, containerId ) {
+export function renderMenu ( text, containerId, customActions ) {
     const container = document.getElementById(containerId);
     const ROOT_ID = 'menu-panel-root';
     const lines = text.split('\n').filter(l => l.trim());
@@ -75,8 +75,10 @@ export function renderMenu ( text, containerId ) {
                 item.onclick = (e) => {
                     e.stopPropagation();
                     // 统一调用底座 Actions 模块
-                    if (typeof menuActions !== 'undefined' && menuActions[child.name]) {
-                        menuActions[child.name]();
+                    // 优先使用传入的 customActions
+                    const actions = customActions || window.menuActions || {};
+                    if (actions[child.name]) {
+                        actions[child.name]();
                     } else {
                         console.log("执行默认功能:", child.name);
                     }
