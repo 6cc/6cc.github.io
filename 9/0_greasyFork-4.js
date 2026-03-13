@@ -8,7 +8,7 @@ const createPanel = async () => {
 
   // 2. 资源加载完成后执行逻辑
   // 注意：由于 referLibrary 会挂载到 window，这里可以直接用
-  jsPanel.jsPanel.create({
+  jsPanel.create({
     headerTitle: '功能窗口',
     content: '这是按需加载的结果',
     theme: 'rebeccapurple',
@@ -24,7 +24,7 @@ const menuActions = {
 
 (async () => {
     // 1. 导入加载器
-    const coreMod = await import('https://gcore.jsdelivr.net/gh/6cc/6cc.github.io/9/1_referLibrary.js');
+    const coreMod = await import('https://gcore.jsdelivr.net/gh/6cc/6cc.github.io/9/1_referLibrary-2.js');
     // 2. 挂载到全局 window 对象
     window.referLibrary = coreMod.referLibrary;
 
