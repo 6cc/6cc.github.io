@@ -36,31 +36,48 @@ export async function referLibrary(inputs, { callback, forceTag = false } = {}) 
  * 检测库的模块格式（ESM / UMD / Global）
  */
 function _detectLibraryFormat(url) {
-    // 通过 URL 特征推断格式
     if (url.includes('umd') || url.includes('.umd.')) {
         return 'umd';
     }
     if (url.includes('esm') || url.includes('.esm.')) {
         return 'esm';
     }
-    // 默认尝试 ESM，失败则回退到 UMD
     return 'auto';
 }
 
 /**
+ * 智能推断导出名称（当未显式指定时）
+ */
+function _inferExportName(url) {
+    // 从 URL 中提取可能的库名
+    // fancybox.esm.min.js -> fancybox -> Fancybox
+    const match = url.match(/\/([a-zA-Z0-9\-_]+)(?:\.(?:esm|umd))?(?:\.min)?\.js/);
+    if (!match) return null;
+
+    const name = match[1];
+    
+    // 常见的大小写转换规则
+    const pascalCase = name
+        .split(/[-_]/)
+        .map(part => part.charAt(0).toUpperCase() + part.slice(1).toLowerCase())
+        .join('');
+
+    return pascalCase;
+}
+
+/**
  * 从全局命名空间中提取导出
- * UMD 库通常将导出挂载到 window 上
  */
 function _extractFromGlobal(name, url) {
     if (!name) return null;
 
     // 尝试多种命名约定
     const candidates = [
-        name,                                    // jsPanel
-        name.charAt(0).toUpperCase() + name.slice(1), // JsPanel
-        name.toUpperCase(),                      // JSPANEL
-        name.toLowerCase(),                      // jspanel
-        `$${name}`,                              // $jsPanel（jquery 风格）
+        name,
+        name.charAt(0).toUpperCase() + name.slice(1),
+        name.toUpperCase(),
+        name.toLowerCase(),
+        `$${name}`,
     ];
 
     for (const candidate of candidates) {
@@ -69,12 +86,11 @@ function _extractFromGlobal(name, url) {
         }
     }
 
-    console.warn(`[Loader] Could not find global export for "${name}" in ${url}`);
     return null;
 }
 
 /**
- * 等待全局变量出现（用于异步挂载的 UMD 库）
+ * 等待全局变量出现
  */
 function _waitForGlobal(name, timeout = 5000) {
     return new Promise((resolve, reject) => {
@@ -99,7 +115,6 @@ async function _loadJS(url, name, forceTag) {
     // 检查是否已存在
     const existing = document.querySelector(`script[src="${url}"]`);
     if (existing) {
-        // 如果需要 name，从全局提取
         if (name) {
             return _extractFromGlobal(name) || window[name] || true;
         }
@@ -107,31 +122,40 @@ async function _loadJS(url, name, forceTag) {
     }
 
     const format = _detectLibraryFormat(url);
+    
+    // 如果未指定 name，尝试从 URL 推断
+    let inferredName = name;
+    if (!name && format === 'esm') {
+        inferredName = _inferExportName(url);
+    }
 
-    // 策略 1：尝试 ESM import（仅在 format 不是 'umd' 时）
+    // 策略 1：尝试 ESM import
     if (!forceTag && format !== 'umd') {
         try {
             const module = await import(url);
 
-            if (name) {
+            if (inferredName || name) {
+                const targetName = inferredName || name;
                 let exportObj;
-                if (module[name]) {
-                    exportObj = module[name];
+
+                // 优先级：同名导出 > default 导出 > 整个 module
+                if (module[targetName]) {
+                    exportObj = module[targetName];
                 } else if (module.default) {
                     exportObj = module.default;
                 } else {
                     exportObj = module;
                 }
-                window[name] = exportObj;
+
+                // 挂载到全局
+                window[targetName] = exportObj;
             }
 
             return module;
         } catch (e) {
             if (format === 'esm') {
-                // 如果明确指定是 ESM，则报错
                 throw e;
             }
-            // 否则继续尝试 UMD 加载
             console.warn(`[Loader] ESM import() failed for ${url}, trying UMD load...`);
         }
     }
@@ -146,16 +170,15 @@ async function _loadJS(url, name, forceTag) {
             try {
                 let result = true;
 
-                if (name) {
-                    // 尝试立即获取全局变量
-                    let exported = _extractFromGlobal(name);
+                if (inferredName || name) {
+                    const targetName = inferredName || name;
+                    let exported = _extractFromGlobal(targetName);
 
-                    // 如果获取失败，等待（某些 UMD 库有延迟）
                     if (!exported) {
-                        exported = await _waitForGlobal(name, 2000).catch(() => null);
+                        exported = await _waitForGlobal(targetName, 2000).catch(() => null);
                     }
 
-                    result = exported || window[name] || true;
+                    result = exported || window[targetName] || true;
                 }
 
                 resolve(result);
@@ -175,12 +198,10 @@ async function _loadJS(url, name, forceTag) {
 async function _loadCSS(url, name, forceTag) {
     const styleId = name ? `style-${name}` : `style-css-${Math.random().toString(36).substr(2, 5)}`;
 
-    // 检查 ID 或 URL 是否已存在
     if (document.getElementById(styleId) || document.querySelector(`link[href="${url}"]`)) {
         return true;
     }
 
-    // 策略：优先使用 style + @import 模式
     const isStandard = url.match(/\.css($|\?)/);
     if (!forceTag && isStandard) {
         return new Promise((resolve) => {
@@ -193,7 +214,6 @@ async function _loadCSS(url, name, forceTag) {
         });
     }
 
-    // 回退到传统 link 标签
     return new Promise((resolve, reject) => {
         const link = document.createElement('link');
         link.id = styleId;
