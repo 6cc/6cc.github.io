@@ -36,7 +36,7 @@
     position: relative;
     margin-bottom: 4px;
     opacity: 0;
-
+    pointer-events: none;
     transition: opacity 250ms;
     overflow: hidden;
     /* 这里是 1px 边界的关键 */

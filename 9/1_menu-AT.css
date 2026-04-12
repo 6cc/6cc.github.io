@@ -48,7 +48,7 @@
 
 .selectWrapper.isOpen {
     opacity: 1;
-    pointer-events: auto;
+
 }
 
 /* 关键点 2：内部面板只做单纯的 X 轴位移 */
